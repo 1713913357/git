@@ -1,0 +1,100 @@
+git init
+git status //用于显示工作目录和暂存区的状态
+git add .
+git commit -m "first commit"//解释
+git remote add origin 你的仓库地址
+git push -u origin master
+
+git remote rm origin//删除
+git stash 对当前的暂存区和工作区状态进行保存。//当修改文件但没有上传，暂存，后可以切换其它分支
+git remote add origin git@github.com:djqiang/gitdemo.git//重新上传
+
+git checkout master或dev或jun//切换分支
+git branch//查看切换后分支
+
+//合并分支
+git pull的作用是从一个仓库或者本地的分支拉取并且整合代码。
+
+
+git pull [<options>] [<repository> [<refspec>…?]]
+
+
+描述
+git pull相当于 git fetch 跟着一个 git merge FETCH_HEAD。<repository>是仓库的名字，<refspec> 是分支的名字。如果都不写，会有一个默认值。
+
+git pull之后会生成一个新的H，合并两个分支。
+
+合并 还可以用 git mearge master
+
+**如果发生了冲突，可以使用git reset --merge进行回退。
+
+实例：默认使用方式
+git pull    按照git branch 设置的默认跟踪的服务器和分支来拉取。
+
+实例： 拉取远程服务器origin的master分支
+ git pull origin （master分支名）
+
+git branch 看看本地分支 
+git chechout aaa 切换分支aaa 
+git branck aaa 创建aaa分支 
+git checkout -b aaa 本地创建 aaa分支，同时切换到aaa分支。只有提交的时候才会在服务端上创建一个分支
+
+git branch -r #查看远程分支
+git branch -a #查看所有分支
+
+分支上传
+git init
+git add .
+git commit -m "first"
+git remote add origin https://git.lug.ustc.edu.cn/wenjun2021/new-project.git
+git branch jun //创建本地分支
+git pull
+git push --force origin jun
+
+/*
+出现错误的主要原因是github中的README.md文件不在本地代码目录中
+
+可以通过如下命令进行代码合并【注：pull=fetch+merge]
+
+git pull --rebase origin master
+
+执行上面代码后可以看到本地代码库中多了README.md文件
+
+此时再执行语句 git push -u origin master即可完成代码上传到github
+*/
+
+git status 查看状态，红没有到本地，绿在本地
+
+**在(jun -> origin)时：git branch->git branch jun_1->git checkout jun_1（修改里面内容）
+
+ git branch jun_2->git checkout jun_2（修改里面内容）->git status->git add .->git commit -m 'addError'（单词写一个，写成add error不匹配）-> git push origin jun_2（上传jun_2成功）
+->git checkout jun_1（修改）->git status->git add .->git commit -m 'add'->git push origin jun_1（上传jun_1成功）->合并 ：git pull origin jun->git push origin jun_2->git checkout jun-> git merge jun_2-> git status-> git push origin jun->git checkout jun_1->git pull origin jun（找同时了解冲突，看保留自己的还是同事的或合并，搜索找>>>>,可以找到所有冲突项）-> git status->git add .-> git commit -m 'add2'-> git push origin jun_1->git checkout jun->git merge jun_1
+
+查看项目的分支们(包括本地和远程) 
+命令行 : $ git branch -a
+删除本地分支 
+命令行 : $ git branch -d <BranchName>
+删除远程分支 
+命令行 : $ git push origin --delete <BranchName>
+查看删除后分支们 
+命令行 : $ git branch -a
+
+
+git pull origin master --allow-unrelated-histories
+以上是将远程仓库的文件拉取到本地仓库了。
+
+合代码：
+先把所有代码拉下来git pull可以在vscode中查看
+切到两个代码中都展示下代码
+再切到要和代码，git merge 要和分支(无联系需加--allow-unrelated-histories)
+找不同
+git add src 
+git commit -m ''
+git push origin dev
+或
+修代码需要在自己分支中修改
+ 进入dev ,pull jun 代码
+出现冲突，修改，重新上传
+ 
+remote: Forbidden fatal: unable to access 'https://git.lug.ustc.edu.cn/wutengteng/my-three.git/': The requested URL returned error: 403
+解决：git remote set-url --add origin https://git.lug.ustc.edu.cn/wutengteng/my-three.git
